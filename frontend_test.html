@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AltMX Frontend Test</title>
+</head>
+<body>
+    <h1>AltMX Frontend Test</h1>
+    <div id="test-results"></div>
+    
+    <script>
+        // Test frontend to backend communication
+        async function testBackendConnection() {
+            const results = document.getElementById('test-results');
+            
+            try {
+                // Test chat API
+                const response = await fetch('http://localhost:8000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'テスト',
+                        use_sapporo_dialect: true
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    results.innerHTML += '<p>✅ Backend connection successful</p>';
+                    results.innerHTML += `<p>Response: ${data.response}</p>`;
+                } else {
+                    results.innerHTML += `<p>❌ Backend error: ${response.status}</p>`;
+                }
+            } catch (error) {
+                results.innerHTML += `<p>❌ Network error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = testBackendConnection;
+    </script>
+</body>
+</html>

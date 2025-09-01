@@ -47,7 +47,8 @@ mkdir -p .serena
 `.serena/project.yml`ファイルを作成：
 ```yaml
 project_name: [プロジェクト名]
-language: [メイン言語]  # python, typescript, java, csharp, rust, go, ruby, cpp, php, swift, elixir, terraform, bash, markdown
+language: [メイン言語]  # python, typescript, java, csharp, rust, go, ruby, cpp, php, swift, elixir, terraform, bash
+# 注意: markdownは現在サポートされていません
 description: [プロジェクトの説明]
 ```
 
@@ -74,7 +75,6 @@ Serenaは以下の言語をサポート：
 - Elixir
 - Terraform
 - Bash
-- Markdown
 
 ### 5. 動作確認
 
@@ -131,13 +131,25 @@ Serenaが正常に動作している場合、ツール一覧が表示されま�
 python -m pip install uv
 ```
 
+#### 2-1. "Invalid language: markdown" エラー
+**原因**: `.serena/project.yml`でサポート外の言語を指定
+
+**解決方法**:
+- `language: markdown` → `language: typescript` など有効な言語に変更
+- VSCodeとClaude Codeを再起動
+
 #### 3. MCPサーバー接続失敗
-**原因**: プロジェクト設定が不完全
+**原因**: プロジェクト設定が不完全またはコマンド設定の問題
 
 **解決方法**:
 1. `.serena`ディレクトリの存在確認
-2. `project.yml`の内容確認
-3. Claude Code再起動
+2. `project.yml`の内容確認（有効な言語設定）
+3. MCP設定の修正：
+   ```bash
+   claude mcp remove serena
+   claude mcp add serena -- python -m uv tool run --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project "フルパス"
+   ```
+4. Claude Code再起動
 
 #### 4. 文字エンコーディングエラー
 **原因**: パスに日本語文字が含まれている
@@ -211,6 +223,14 @@ claude mcp add serena -- python -m uv tool run --from git+https://github.com/ora
 - [MCP Protocol Documentation](https://mcp.so/)
 - [Claude Code Documentation](https://docs.anthropic.com/claude/docs)
 
+### AltMXプロジェクト実際の設定例
+```yaml
+project_name: AltMX
+language: typescript
+description: AltMX project - AI collaboration development demonstration system
+```
+
 ## 更新履歴
 
 - 2025-09-01: 初版作成（実際の導入手順を基に作成）
+- 2025-09-01: トラブルシューティング追加（markdown言語サポート外、MCP接続失敗の詳細対処法）
