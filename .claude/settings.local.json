@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(claude mcp:*)",
+      "Bash(uvx:*)",
+      "Bash(python:*)",
+      "WebFetch(domain:qiita.com)",
+      "Bash(mkdir:*)",
+      "Read(C:\\Users\\SYUNPEI/**)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
