@@ -1,10 +1,13 @@
-# 🤖 AltMX - AI協働開発ライブデモンストレーションシステム
+# 🏎️ AltMX - AI協働開発ライブデモンストレーションシステム
 
-**「AIは難しい」から「AIと一緒なら簡単」へ**
+**「AIは難しい」から「AIと一緒なら簡単」へ**  
+**札幌なまりで話すAIエージェント「AltMX」との協働開発**
 
-[🎥 デモ動画](https://example.com/demo) | [📖 ドキュメント](./docs) | [🚀 今すぐ試す](https://altmx.example.com)
+[![MVP Status](https://img.shields.io/badge/Status-MVP_Complete-success)](https://github.com/almlog/AltMX)
+[![Tech Stack](https://img.shields.io/badge/Stack-React_FastAPI-blue)](#技術構成)
+[![Development](https://img.shields.io/badge/Method-TDD_KIRo-orange)](#開発手法)
 
-</div>
+[📖 ドキュメント](./docs) | [🎬 スクリーンショット](./image/スクリーンショット%202025-09-01%20234446.png) | [🔧 ローカル起動](#クイックスタート)
 
 ## 📌 概要
 
@@ -29,10 +32,17 @@ AltMXは、社内のAI活用を促進するためのライブデモンストレ�
 ## 📸 スクリーンショット
 
 <div align="center">
-<img src="./docs/images/screenshot-main.png" width="800px" alt="メイン画面">
+<img src="./image/スクリーンショット 2025-09-01 234446.png" width="800px" alt="AltMX MVP画面">
 
-*Windows 95スタイルのUIで、技術的な壁を感じさせない親しみやすいデザイン*
+*札幌なまりメッセージ「なんまら話しかけてよ〜」でユーザーを出迎えるAltMX*
 </div>
+
+### ✨ MVP完成機能
+- ✅ **フロントエンド↔バックエンド通信** - React + FastAPI
+- ✅ **札幌なまりAIエージェント** - 「だべ〜」「なんまら」対応
+- ✅ **リアルタイムチャット** - レスポンシブUI
+- ✅ **CORS対応** - ブラウザからの完全動作
+- ✅ **TDD実践** - テストファーストの品質保証
 
 ## 🏗️ システム構成
 
@@ -79,30 +89,32 @@ graph TB
 
 ```bash
 # リポジトリのクローン
-git clone https://github.com/your-org/altmx.git
-cd altmx
+git clone https://github.com/almlog/AltMX.git
+cd AltMX
 
 # 依存関係のインストール
-npm install
-cd backend && pip install -r requirements.txt
-
-# 環境変数の設定
-cp .env.example .env
-# .envファイルを編集して必要なAPIキーを設定
+npm run install:all  # frontend + backend 一括インストール
 ```
 
-### 起動方法
+### 🚀 起動方法
 
 ```bash
-# 開発環境の起動（フロントエンド + バックエンド同時起動）
+# 開発環境の起動（推奨）
 npm run dev
+# → フロントエンド: http://localhost:5174
+# → バックエンド: http://localhost:8000
 
-# 本番環境用ビルド
-npm run build
-npm run start
+# 個別起動も可能
+npm run dev:frontend  # React開発サーバー
+npm run dev:backend   # FastAPI開発サーバー
 ```
 
-デフォルトで http://localhost:3000 でアクセス可能です。
+### 💬 AltMXとの対話テスト
+
+1. ブラウザで http://localhost:5174 にアクセス
+2. 「なんまら話しかけてよ〜」のメッセージを確認
+3. 入力欄に「こんにちは」と入力して送信
+4. 札幌なまりで「おー！元気だっけ？」など返答が表示される
 
 ## 📝 使い方
 
