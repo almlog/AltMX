@@ -1,10 +1,13 @@
 """
 AltMX Custom Agent - 札幌なまりで親しみやすいAIエージェント
+本物のAI統合版（Gemini + Claude）
 """
 
 import random
+import asyncio
 from typing import Dict, Any
 from datetime import datetime
+from ai_service import AIService
 
 
 class AltMXAgent:
@@ -18,6 +21,9 @@ class AltMXAgent:
             "mood": "friendly",
             "energy_level": 8
         }
+        
+        # 本物のAIサービス統合
+        self.ai_service = AIService()
         
         # 札幌なまりの語彙集
         self.sapporo_vocab = {
@@ -56,30 +62,45 @@ class AltMXAgent:
             
         return text
     
-    def generate_response(self, user_message: str, use_dialect: bool = True) -> Dict[str, Any]:
-        """ユーザーメッセージに対する応答を生成"""
+    async def generate_response(self, user_message: str, use_dialect: bool = True) -> Dict[str, Any]:
+        """ユーザーメッセージに対する応答を生成（本物のAI統合版）"""
         start_time = datetime.now()
         
-        # 基本応答ロジック（後でClaude API統合）
-        base_response = self._get_base_response(user_message)
-        
-        # 札幌なまり適用
-        if use_dialect:
-            response = self.apply_sapporo_dialect(base_response, intensity=2)
-        else:
-            response = base_response
+        try:
+            # 本物のAI（Gemini + Claude）で応答生成
+            ai_response = await self.ai_service.generate_response(
+                user_message, 
+                use_sapporo_dialect=use_dialect
+            )
             
-        # 処理時間計算
-        end_time = datetime.now()
-        processing_time = int((end_time - start_time).total_seconds() * 1000)
-        
-        return {
-            "response": response,
-            "dialect_applied": use_dialect,
-            "thinking_time_ms": processing_time,
-            "mood": self.personality["mood"],
-            "car_status": "normal"  # ライト点滅制御用
-        }
+            # 処理時間計算
+            end_time = datetime.now()
+            processing_time = int((end_time - start_time).total_seconds() * 1000)
+            
+            return {
+                "response": ai_response,
+                "dialect_applied": use_dialect,
+                "thinking_time_ms": processing_time,
+                "mood": self.personality["mood"],
+                "car_status": "blinking" if processing_time > 2000 else "normal",  # 長時間思考時はライト点滅
+                "ai_provider": self.ai_service.session_stats.get("gemini_calls", 0) > 0 and "gemini" or "claude"
+            }
+            
+        except Exception as e:
+            # エラー時のフォールバック（札幌なまりエラーメッセージ）
+            error_response = random.choice(self.sapporo_vocab.get("errors", ["ちょっと調子悪いわ"]))
+            
+            end_time = datetime.now()
+            processing_time = int((end_time - start_time).total_seconds() * 1000)
+            
+            return {
+                "response": error_response,
+                "dialect_applied": use_dialect,
+                "thinking_time_ms": processing_time,
+                "mood": "confused",
+                "car_status": "error",
+                "error": str(e)
+            }
     
     def _get_base_response(self, message: str) -> str:
         """基本応答（後でClaude APIに置き換え）"""

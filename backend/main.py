@@ -56,8 +56,8 @@ async def root():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_with_altmx(request: ChatRequest):
-    """AltMXエージェントとのチャット"""
-    response_data = altmx.generate_response(
+    """AltMXエージェントとのチャット（本物のAI統合版）"""
+    response_data = await altmx.generate_response(
         user_message=request.message,
         use_dialect=request.use_sapporo_dialect
     )

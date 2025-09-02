@@ -49,7 +49,9 @@
       "Bash(powershell:*)",
       "mcp__serena__think_about_whether_you_are_done",
       "WebFetch(domain:localhost)",
-      "mcp__serena__think_about_task_adherence"
+      "mcp__serena__think_about_task_adherence",
+      "mcp__serena__list_memories",
+      "mcp__serena__read_memory"
     ],
     "deny": [],
     "ask": []
