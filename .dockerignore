@@ -1,0 +1,59 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+docs/
+LICENSE
+
+# Development files
+.env
+.env.*
+*.log
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Testing
+tests/
+test_*.py
+*.test.js
+*.spec.js
+coverage/
+.coverage
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# AWS credentials (NEVER include in image)
+aws_credentials.env
+credentials/
+*.pem
+*.key
+
+# Cache
+.cache/
+*.cache
