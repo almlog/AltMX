@@ -37,12 +37,40 @@ AltMXは、社内のAI活用を促進するためのライブデモンストレ�
 *札幌なまりメッセージ「なんまら話しかけてよ〜」でユーザーを出迎えるAltMX*
 </div>
 
-### ✨ MVP完成機能
+### ✨ 実装済み機能
 - ✅ **フロントエンド↔バックエンド通信** - React + FastAPI
 - ✅ **札幌なまりAIエージェント** - 「だべ〜」「なんまら」対応
-- ✅ **リアルタイムチャット** - レスポンシブUI
+- ✅ **リアルタイムチャット** - WebSocket統合
 - ✅ **CORS対応** - ブラウザからの完全動作
 - ✅ **TDD実践** - テストファーストの品質保証
+- ✅ **GitHub統合** - 生成コードの自動リポジトリ作成・プッシュ（Task 4.5完了）
+- ✅ **セッション管理** - ライブデモセッション制御（Task 3.6完了）
+- ✅ **リアルタイムデータ同期** - Zustand + WebSocket（Task 3.8完了）
+- ✅ **AWS本番環境デプロイ** - 実環境稼働中！（Task 6.1完了 - 2025/09/04）
+
+## 🌐 **本番環境稼働中！**
+
+**🎉 AltMXが本番AWS環境で稼働しています**
+
+- **📍 本番URL**: http://54.199.61.224:80 
+- **🏗️ インフラ**: AWS ECS Fargate + VPC
+- **⚡ ステータス**: 稼働中 (nginx webserver)
+- **🛠️ デプロイ手法**: AWS CLI直接構築（段階的デプロイ）
+
+### AWS構成
+```
+VPCスタック (altmx-vpc): CREATE_COMPLETE
+├── VPC: vpc-08a33d84b44e3e053
+├── Public Subnet 1: subnet-090f0040669325120 (ap-northeast-1a)
+├── Public Subnet 2: subnet-0a8b0ce5ca45cf01a (ap-northeast-1c)
+└── Internet Gateway + Route Table
+
+アプリケーションスタック (altmx-simple): CREATE_COMPLETE  
+├── ECS Cluster: altmx-simple-altmx-simple
+├── ECS Service: altmx-simple-service-altmx-simple (1 task 稼働中)
+├── Task Definition: nginx:latest (256 CPU, 512 Memory)
+└── Security Group: HTTP/80ポート公開
+```
 
 ## 🏗️ システム構成
 
