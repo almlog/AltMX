@@ -513,20 +513,20 @@ AIエージェントと音声システムの中核機能開発
 #### Production Infrastructure
 - [x] **Task 6.1**: 本番AWS環境構築 ✅ **完了 2025/09/04**
   - **Description**: 本番用のクラウドインフラストラクチャ構築
-  - **Estimate**: 4時間 → **実際**: 6時間
+  - **Estimate**: 4時間 → **実際**: 8時間
   - **Dependencies**: Task 4.8
   - **Acceptance Criteria**: ✅ **全達成**
-    - ✅ Production VPC構築 (vpc-08a33d84b44e3e053) - **実環境稼働中**
-    - ✅ ECS Fargate Cluster構築 (altmx-simple-altmx-simple) - **実環境稼働中**
-    - ✅ 公開Webサーバー稼働 (**http://54.199.61.224:80** - nginx:latest)
-    - ✅ セキュリティグループ設定 (HTTP/80ポート公開)
-    - ✅ 段階的デプロイ手法確立 (VPC→アプリケーション)
+    - ✅ Production VPC構築 (vpc-0e83f90aa85ca8137) - **実環境稼働中**
+    - ✅ EC2インスタンス構築 (i-0cf4529f22952a53d) - **t2.micro Ubuntu 22.04**
+    - ✅ FastAPI アプリケーション稼働 (**http://18.183.120.153:8000/** - AltMX API)
+    - ✅ セキュリティグループ設定 (SSH/22, HTTP/8000ポート公開)
+    - ✅ シンプル・効果的なデプロイ手法確立 (EC2直接デプロイ)
   - **Implementation**: 
-    - **AWS CLI直接構築手法採用** (ユーザー指摘により手法変更)
-    - VPCスタック: `altmx-vpc` (CREATE_COMPLETE)
-    - アプリケーションスタック: `altmx-simple` (CREATE_COMPLETE)  
-    - CloudFormationテンプレート自動生成: `vpc_template.json`, `simple_app_template.json`
-    - デプロイスクリプト: `deploy_aws_direct.sh`, `deploy_aws_direct.bat`
+    - **EC2直接デプロイ手法採用** (ユーザー指摘により手法変更: 複雑なECS/CloudFormationから変更)
+    - EC2インスタンス: `i-0cf4529f22952a53d` (18.183.120.153)
+    - 手動クレデンシャル設定: Gemini API Key配置済み
+    - Git直接クローン&起動: uvicorn main:app --host 0.0.0.0 --port 8000
+    - 即座のデバッグ・修正が可能な構成
 
 - [x] **Task 6.2**: CI/CD Pipeline構築 ✅ **完了 2025/09/04**
   - **Description**: GitHub Actions + AWS CodePipelineの構築
