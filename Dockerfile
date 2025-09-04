@@ -15,6 +15,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy backend application
 COPY backend/ ./backend/
 
+# Set environment variables for production
+ENV ENVIRONMENT=production
+ENV PYTHONPATH=/app
+
 # Create simple startup script
 RUN echo '#!/bin/bash\n\
 echo "Starting AltMX Backend Server..."\n\

@@ -51,7 +51,22 @@
       "WebFetch(domain:localhost)",
       "mcp__serena__think_about_task_adherence",
       "mcp__serena__list_memories",
-      "mcp__serena__read_memory"
+      "mcp__serena__read_memory",
+      "Read(/C:\\Users\\SYUNPEI\\OneDrive\\デスクトップ\\AltMX/**)",
+      "Read(/C:\\Users\\SYUNPEI\\OneDrive\\デスクトップ\\AltMX/**)",
+      "Bash(aws ecs describe-services:*)",
+      "Read(/C:\\Users\\SYUNPEI\\OneDrive\\デスクトップ\\AltMX/**)",
+      "Bash(curl:*)",
+      "Bash(aws ecs list-tasks:*)",
+      "Bash(aws ecs describe-tasks:*)",
+      "Bash(aws ecs list-task-definitions:*)",
+      "Bash(aws ecs update-service:*)",
+      "Bash(aws ecs wait services-stable:*)",
+      "Bash(bash:*)",
+      "mcp__serena__find_file",
+      "Bash(aws configure:*)",
+      "Read(/C:\\Users\\SYUNPEI\\OneDrive\\デスクトップ\\AltMX\\backend/**)",
+      "Bash(docker:*)"
     ],
     "deny": [],
     "ask": []
