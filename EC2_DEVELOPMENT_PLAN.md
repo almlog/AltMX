@@ -1,7 +1,7 @@
-# EC2 Development Environment Plan
+# EC2 Development Continuation Plan
 
 ## Overview
-AltMXプロジェクトの開発環境をEC2インスタンス上に構築し、ローカルWindows環境からリモート開発を行う計画書。
+AltMXプロジェクトをEC2インスタンス上で開発継続するための計画書。ローカルWindows環境からEC2環境にプロジェクトファイルをコピー済み。これ以降はEC2インスタンス上で開発を行う。
 
 ## Current Infrastructure Status
 
@@ -35,109 +35,175 @@ AltMXプロジェクトの開発環境をEC2インスタンス上に構築し、
 - **Database**: In-memory (FastAPI)
 - **API Integration**: Claude API ready (needs key configuration)
 
-## Development Workflow Plan
+## 完了したこと ✅
 
-### Phase 1: Environment Finalization
-1. **Claude API Key Setup**
-   ```bash
-   export ANTHROPIC_API_KEY=your_key_here
-   echo 'export ANTHROPIC_API_KEY=your_key_here' >> ~/.bashrc
-   ```
+### EC2環境構築
+- **EC2インスタンス**: t3.medium作成・設定完了
+- **セキュリティ設定**: AltMX-adminユーザー作成、ubuntu削除、専用SSH鍵設定
+- **基本ツール**: Python 3.10, Node.js 18.x, Git, npm, pip インストール完了
+- **プロジェクトコピー**: ローカルからEC2にAltMXプロジェクト全体をコピー完了
 
-2. **Serena MCP Integration Test**
-   ```bash
-   # Test basic MCP functionality
-   python3 ~/serena-mcp/main.py
-   ```
+### 開発環境セットアップ
+- **FastAPI Backend**: 起動確認済み (http://43.207.173.148:8000)
+- **Python仮想環境**: venv作成・アクティベート確認済み
+- **Anthropic SDK**: インストール完了
+- **VS Code Remote-SSH**: 接続確認済み
 
-3. **GitHub Sync Setup**
-   ```bash
-   # Configure Git for remote development
-   git config --global user.name "AltMX Development"
-   git config --global user.email "development@altmx.local"
-   ```
+### 基本的なMCP構成
+- **Serena MCP構造**: ~/.serena/ フォルダ・設定ファイル作成済み
+- **Claude設定**: ~/.claude/claude_desktop_config.json 設定済み
+- **カスタムSerena実装**: ~/serena-mcp/main.py 基本版作成済み
 
-### Phase 2: Frontend Cyber-Pop Design Implementation
-**IMPORTANT**: Frontend must use the cyber-pop design, NOT the current MVP placeholder.
+## できていないこと・必要なこと 🔄
 
-#### Design Requirements (Based on Previous Specifications):
-- **Color Scheme**: Neon blues (#00d4ff), dark backgrounds (#0a0a0a, #1a1a1a)
-- **Typography**: JetBrains Mono for code elements
-- **Visual Style**: Cyberpunk aesthetic with neon highlights
-- **Interactive Elements**: Glowing effects, smooth animations
-- **Layout**: Sophisticated dashboard layout (not basic chat interface)
+### 即座に必要
+1. **ANTHROPIC_API_KEY設定** - Claude APIテスト用
+2. **GitHub最新版PULL** - この計画書を含む最新コードの取得
+3. **サイバーポップUI実装** - 現在のMVP版を完全に置換
 
-#### Implementation Plan:
-1. Replace current App.tsx with cyber-pop design
-2. Implement advanced CSS animations and effects
-3. Create sophisticated UI components
-4. Add interactive data visualizations
-5. Implement responsive design for various screen sizes
+### 開発継続で必要
+1. **フルスペックSerena MCP** - 現在は基本実装のみ
+2. **本格的なUI/UX** - 現在のは仮のMVP、サイバーポップデザインに全面刷新
+3. **リアルタイム通信** - WebSocket等でライブ更新
+4. **本番環境設定** - SSL/TLS、ドメイン等
 
-### Phase 3: Backend Enhancement
-1. **Database Integration** (if needed)
-2. **Advanced Claude API Features**
-3. **Real-time Communication** (WebSocket for live updates)
-4. **Security Enhancements**
+## 迷ったら見るところ 📚
 
-### Phase 4: Production Deployment Preparation
-1. **Environment Variables Management**
-2. **SSL/TLS Configuration**
-3. **Domain Setup** (if applicable)
-4. **Monitoring and Logging**
-
-## Development Tools Configuration
-
-### VS Code Remote Development
-```json
-// .vscode/settings.json (on EC2)
-{
-  "python.defaultInterpreterPath": "/usr/bin/python3",
-  "typescript.preferences.includePackageJsonAutoImports": "auto",
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "files.autoSave": "afterDelay"
-}
+### 重要ファイルの場所
+```
+/home/AltMX-admin/AltMX/
+├── PERSONA.md              # 「あの」のペルソナ - 開発スタイル・好み
+├── PROJECT_PLAN.md         # プロジェクト全体計画 (存在する場合)
+├── tasks.md               # 現在のタスク状況
+├── CLAUDE.md              # このプロジェクト用のClaude指示書
+└── EC2_DEVELOPMENT_PLAN.md # この計画書
 ```
 
-### Claude-Code Integration
-- **Config Path**: `~/.claude/claude_desktop_config.json`
-- **Serena MCP**: Configured and ready
-- **Project Root**: `/home/AltMX-admin/AltMX`
+### 開発指針 - KIRo風
+- **仕様駆動開発**: 実装前に必ず仕様書作成
+- **TDD必須**: Red-Green-Refactor厳守
+- **完成の定義**: コードが動く ≠ 完成。実際のユーザー体験まで確認必須
+- **禁止事項**: テストなし完成宣言、エラー無視、表面的確認
 
-## Directory Structure on EC2
+### 技術スタック
+- **Frontend**: React + TypeScript + Tailwind CSS
+- **Backend**: FastAPI + Python
+- **AI Integration**: Claude API (Anthropic SDK)
+- **Development**: VS Code + Claude-code + Serena MCP
+
+### サイバーポップデザイン仕様
+- **Color Scheme**: ネオンブルー (#00d4ff), ダーク背景 (#0a0a0a, #1a1a1a)
+- **Typography**: JetBrains Mono (コード要素)
+- **Visual Style**: サイバーパンク美学、ネオンハイライト
+- **Interactive**: グロー効果、スムーズアニメーション
+- **Layout**: 洗練されたダッシュボード (基本チャットインターフェースではない)
+
+## 次のステップ（EC2上で実行）
+
+### 1. 環境最終確認・設定
+```bash
+# SSH接続
+ssh -i "altmx-dev-key.pem" AltMX-admin@43.207.173.148
+
+# 最新コードPULL
+cd ~/AltMX
+git pull origin master
+
+# API Key設定（実際のキーに置換）
+export ANTHROPIC_API_KEY=your_actual_key_here
+echo 'export ANTHROPIC_API_KEY=your_actual_key_here' >> ~/.bashrc
+
+# Claude APIテスト
+python3 claude_test.py
 ```
-/home/AltMX-admin/
-├── AltMX/                          # Main project directory
-│   ├── frontend/                   # React + TypeScript + Tailwind
-│   ├── backend/                    # FastAPI application
-│   ├── docs/                       # Project documentation
-│   └── tasks.md                    # Current task tracking
-├── .serena/                        # Serena MCP configuration
-│   ├── config.json
-│   ├── logs/
-│   └── memories/
-├── .claude/                        # Claude configuration
-│   └── claude_desktop_config.json
-├── serena-mcp/                     # Custom Serena MCP implementation
-│   └── main.py
-└── claude_test.py                  # Claude API testing script
+
+### 2. VS Code Remote開発環境起動
+```bash
+# VS Code Remote-SSH接続
+code --remote ssh-remote+43.207.173.148 /home/AltMX-admin/AltMX
 ```
 
-## Next Steps for Continuation
+### 3. サイバーポップUI実装開始
+```bash
+# フロントエンド開発サーバー起動
+cd ~/AltMX/frontend
+npm run dev
+```
 
-### Immediate Actions (Before Switching to EC2):
-1. ✅ Create this deployment plan
-2. 🔄 Push to GitHub and merge
-3. 📥 Pull latest changes on EC2
-4. 🎨 Begin cyber-pop frontend implementation
+## トラブルシューティング 🔧
 
-### On EC2 Development:
-1. **Set up API keys and environment variables**
-2. **Start VS Code Remote-SSH session**
-3. **Implement cyber-pop frontend design**
-4. **Test full-stack integration**
-5. **Deploy production-ready version**
+### よくある問題と解決法
+1. **SSH接続が切れる**
+   ```bash
+   # ~/.ssh/config に設定追加
+   Host altmx-ec2
+       HostName 43.207.173.148
+       User AltMX-admin
+       IdentityFile /path/to/altmx-dev-key.pem
+       ServerAliveInterval 60
+       ServerAliveCountMax 3
+   ```
+
+2. **Serena MCPが動かない**
+   ```bash
+   # 基本設定確認
+   ls -la ~/.serena/
+   cat ~/.claude/claude_desktop_config.json
+   python3 ~/serena-mcp/main.py  # 直接テスト
+   ```
+
+3. **Node.js/npm問題**
+   ```bash
+   # Node.jsバージョン確認・切り替え
+   node --version
+   npm --version
+   # 必要に応じてnvm使用
+   ```
+
+4. **ポート問題**
+   ```bash
+   # ポート使用状況確認
+   sudo netstat -tlnp | grep :8000
+   sudo netstat -tlnp | grep :5173  # Vite dev server
+   ```
+
+### 緊急時コマンド
+```bash
+# サーバープロセス強制停止
+pkill -f "python main.py"
+pkill -f "npm run dev"
+
+# Git状態リセット
+git stash
+git checkout master
+git pull origin master
+
+# 環境再構築
+source ~/AltMX/venv/bin/activate
+cd ~/AltMX/frontend && npm install
+```
+
+## 重要な注意事項 ⚠️
+
+### 開発継続時の必須確認
+1. **BackendとFrontend両方起動** - 別ターミナルで並行実行
+2. **ANTHROPIC_API_KEY設定済み** - Claude API機能に必須
+3. **Git最新版確認** - 作業前に必ずpull
+4. **Tailwind設定確認** - サイバーポップカラーが定義済みか
+
+### ファイル更新時の注意
+- **tasks.md**: 進捗更新時は必ずcommit
+- **frontend/src/App.tsx**: サイバーポップUI実装時は完全置換
+- **backend/main.py**: API変更時はテスト実行必須
+
+### セキュリティ注意
+- **API Key露出禁止** - 環境変数のみ使用
+- **SSH Key管理** - .pemファイルは権限400維持
+- **Git Commit前確認** - 機密情報含まれていないかチェック
+
+---
+
+**EC2インスタンス上で開発継続準備完了。次はGitHub PUSHしてEC2でPULLして最新化後、サイバーポップUI実装開始。**
 
 ## Cost Optimization Notes
 - **Current Cost**: ~$0.0464/hour for t3.medium
