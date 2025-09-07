@@ -24,12 +24,18 @@ interface CodeDisplayAreaProps {
   currentView: 'code' | 'tree' | 'file' | 'preview'
   codeContent: CodeContent
   onViewChange: (view: 'code' | 'tree' | 'file' | 'preview') => void
+  'data-testid'?: string
+  className?: string
+  style?: React.CSSProperties
 }
 
 const CodeDisplayArea: FC<CodeDisplayAreaProps> = ({
   currentView,
   codeContent,
-  onViewChange
+  onViewChange,
+  'data-testid': dataTestId,
+  className,
+  style
 }) => {
   const renderCodeView = () => (
     <div className="code-view">
@@ -146,7 +152,11 @@ const CodeDisplayArea: FC<CodeDisplayAreaProps> = ({
   }
 
   return (
-    <div className="code-display-area neon-panel">
+    <div 
+      className={`code-display-area neon-panel ${className || ''}`}
+      data-testid={dataTestId}
+      style={style}
+    >
       {/* タブ切り替え */}
       <ViewTabs 
         currentView={currentView}

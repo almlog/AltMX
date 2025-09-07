@@ -131,9 +131,17 @@ const AGENT_MODES: AgentModeDefinition[] = [
 
 interface AgentModePanelProps {
   onModeChange?: (mode: string) => void
+  'data-testid'?: string
+  className?: string
+  style?: React.CSSProperties
 }
 
-export const AgentModePanel: React.FC<AgentModePanelProps> = ({ onModeChange }) => {
+export const AgentModePanel: React.FC<AgentModePanelProps> = ({ 
+  onModeChange, 
+  'data-testid': dataTestId, 
+  className,
+  style 
+}) => {
   const [currentMode, setCurrentMode] = useState<string>('chat')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [lastMessage, setLastMessage] = useState<string>('')
@@ -213,7 +221,11 @@ export const AgentModePanel: React.FC<AgentModePanelProps> = ({ onModeChange }) 
   const currentModeInfo = getCurrentModeInfo()
 
   return (
-    <div className={`agent-mode-panel ${isExpanded ? 'expanded' : 'collapsed'}`}>
+    <div 
+      className={`agent-mode-panel ${isExpanded ? 'expanded' : 'collapsed'} ${className || ''}`}
+      data-testid={dataTestId}
+      style={style}
+    >
       {/* ヘッダー部分 - 常に表示 */}
       <div 
         className="mode-header"

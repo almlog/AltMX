@@ -23,6 +23,9 @@ interface SidePanelProps {
   isTurboMode: boolean
   onTurboToggle: () => void
   onSendMessage: (message: string) => void
+  'data-testid'?: string
+  className?: string
+  style?: React.CSSProperties
 }
 
 const SidePanel: FC<SidePanelProps> = ({
@@ -30,10 +33,17 @@ const SidePanel: FC<SidePanelProps> = ({
   talkLog,
   isTurboMode,
   onTurboToggle,
-  onSendMessage
+  onSendMessage,
+  'data-testid': dataTestId,
+  className,
+  style
 }) => {
   return (
-    <div className="side-panel">
+    <div 
+      className={`side-panel ${className || ''}`}
+      data-testid={dataTestId}
+      style={style}
+    >
       <div className="side-panel-content">
         {/* AltMXステータス表示 */}
         <AltMXStatusPanel status={altmxStatus} />
