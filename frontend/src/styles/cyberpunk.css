@@ -1,0 +1,199 @@
+/* AltMX Cyberpunk UI Styles */
+
+/* Base cyberpunk classes for TDD test coverage */
+.cyberpunk-glow {
+  box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+}
+
+.cyberpunk-glow-border {
+  border: 1px solid currentColor;
+  box-shadow: 0 0 10px currentColor, inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.cyberpunk-terminal-border {
+  border: 2px solid #00d4ff;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.03) 30%, rgba(0, 212, 255, 0.03) 70%, transparent 70%);
+  position: relative;
+}
+
+.cyberpunk-terminal-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00d4ff, transparent, #00d4ff);
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0.3;
+}
+
+.cyberpunk-hologram-border {
+  border: 1px solid #00d4ff;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.1) 50%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cyberpunk-hologram-border::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: cyberpunk-scan 3s linear infinite;
+}
+
+.cyberpunk-scanning-border {
+  animation: cyberpunk-glow 1s ease-in-out infinite alternate;
+}
+
+.cyberpunk-monitor-style {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  border: 1px solid #00d4ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.cyberpunk-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.cyberpunk-pulse-blue {
+  animation: cyberpunk-pulse 2s ease-in-out infinite;
+  color: #00d4ff;
+}
+
+.cyberpunk-pulse-green {
+  animation: cyberpunk-pulse 2s ease-in-out infinite;
+  color: #00ff88;
+}
+
+.cyberpunk-pulse-orange {
+  animation: cyberpunk-pulse 0.5s ease-in-out infinite;
+  color: #ffa500;
+}
+
+.cyberpunk-pulse-pink {
+  animation: cyberpunk-pulse 2s ease-in-out infinite;
+  color: #ff0080;
+}
+
+.cyberpunk-glow-blue {
+  border: 1px solid #00d4ff;
+  box-shadow: 0 0 10px #00d4ff, inset 0 0 5px rgba(0, 212, 255, 0.1);
+}
+
+.cyberpunk-glow-pink {
+  border: 1px solid #ff0080;
+  box-shadow: 0 0 10px #ff0080, inset 0 0 5px rgba(255, 0, 128, 0.1);
+}
+
+.cyberpunk-highlight-pink {
+  color: #ff0080;
+  text-shadow: 0 0 5px #ff0080;
+  font-weight: bold;
+}
+
+.cyberpunk-fade-in {
+  animation: cyberpunk-fade-in 1s ease-out;
+}
+
+.cyberpunk-glow-intensify {
+  box-shadow: 0 0 20px currentColor, 0 0 40px currentColor !important;
+  transition: box-shadow 0.3s ease;
+}
+
+.cyberpunk-pulse-click {
+  animation: cyberpunk-pulse 0.3s ease-out;
+}
+
+.cyberpunk-mobile-optimized {
+  /* Mobile-specific cyberpunk styles */
+}
+
+.syntax-highlight-glow {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.syntax-highlight-glow .keyword {
+  color: #00d4ff;
+  text-shadow: 0 0 3px #00d4ff;
+}
+
+.syntax-highlight-glow .string {
+  color: #00ff88;
+  text-shadow: 0 0 3px #00ff88;
+}
+
+.syntax-highlight-glow .number {
+  color: #ffff00;
+  text-shadow: 0 0 3px #ffff00;
+}
+
+.fast-blink {
+  animation-duration: 0.2s;
+}
+
+/* Keyframe Animations */
+@keyframes cyberpunk-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+}
+
+@keyframes cyberpunk-glow {
+  0% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    filter: brightness(1);
+  }
+  100% {
+    box-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes cyberpunk-scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes cyberpunk-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Car-specific animations */
+.car-idle-pulse {
+  animation: cyberpunk-pulse 3s ease-in-out infinite;
+}
+
+.car-thinking-blink {
+  animation: cyberpunk-pulse 0.5s ease-in-out infinite;
+}
+
+.car-processing-glow {
+  animation: cyberpunk-glow 1s ease-in-out infinite alternate;
+}

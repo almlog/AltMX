@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "VPCId",
+        "ParameterValue": "vpc-08a33d84b44e3e053"
+    },
+    {
+        "ParameterKey": "SubnetIds",
+        "ParameterValue": "subnet-090f0040669325120,subnet-0a8b0ce5ca45cf01a"
+    },
+    {
+        "ParameterKey": "ContainerImage",
+        "ParameterValue": "nginx:latest"
+    }
+]

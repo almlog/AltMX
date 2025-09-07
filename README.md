@@ -1,10 +1,13 @@
-# 🤖 AltMX - AI協働開発ライブデモンストレーションシステム
+# 🏎️ AltMX - AI協働開発ライブデモンストレーションシステム
 
-**「AIは難しい」から「AIと一緒なら簡単」へ**
+**「AIは難しい」から「AIと一緒なら簡単」へ**  
+**札幌なまりで話すAIエージェント「AltMX」との協働開発**
 
-[🎥 デモ動画](https://example.com/demo) | [📖 ドキュメント](./docs) | [🚀 今すぐ試す](https://altmx.example.com)
+[![MVP Status](https://img.shields.io/badge/Status-MVP_Complete-success)](https://github.com/almlog/AltMX)
+[![Tech Stack](https://img.shields.io/badge/Stack-React_FastAPI-blue)](#技術構成)
+[![Development](https://img.shields.io/badge/Method-TDD_KIRo-orange)](#開発手法)
 
-</div>
+[📖 ドキュメント](./docs) | [🎬 スクリーンショット](./image/スクリーンショット%202025-09-01%20234446.png) | [🔧 ローカル起動](#クイックスタート)
 
 ## 📌 概要
 
@@ -29,10 +32,45 @@ AltMXは、社内のAI活用を促進するためのライブデモンストレ�
 ## 📸 スクリーンショット
 
 <div align="center">
-<img src="./docs/images/screenshot-main.png" width="800px" alt="メイン画面">
+<img src="./image/スクリーンショット 2025-09-01 234446.png" width="800px" alt="メイン画面">
 
-*Windows 95スタイルのUIで、技術的な壁を感じさせない親しみやすいデザイン*
+*札幌なまりメッセージ「なんまら話しかけてよ〜」でユーザーを出迎えるAltMX*
 </div>
+
+### ✨ 実装済み機能
+- ✅ **🗣️ チャット統合コード生成** - 自然な会話でリアルタイムコーディング（2025/09/05完了）
+- ✅ **⚛️ 完全なReact/TypeScriptアプリ生成** - TODO、カウンター等フル機能アプリ即時生成
+- ✅ **🎌 札幌なまりAIエージェント** - 「だべ〜」「なんまら」での親しみやすいインタラクション
+- ✅ **⚡ ライブプレビュー** - 生成コードの即座の動作確認（300ms以下）
+- ✅ **🧪 TDD Green状態達成** - 21/21テストパス（統合7+コード生成14）
+- ✅ **🔥 フロントエンド↔バックエンド完全統合** - React + FastAPI + CORS対応
+- ✅ **🎯 キーワード自動検出** - 「作って」でコード生成自動実行
+- ✅ **📱 本番環境稼働** - http://18.180.87.189:5173/ でアクセス可能
+
+## 🌐 **本番環境稼働中！**
+
+**🎉 AltMXが本番AWS環境で稼働しています**
+
+- **📍 開発環境URL**: http://18.180.87.189:5173/ （チャット統合ライブコーディング稼働中）
+- **📍 本番URL**: http://54.199.61.224:80 
+- **🏗️ インフラ**: AWS ECS Fargate + VPC
+- **⚡ ステータス**: 稼働中 (自動デプロイ対応済み) 
+- **🛠️ デプロイ手法**: GitHub Actions自動CI/CD
+
+### AWS構成
+```
+VPCスタック (altmx-vpc): CREATE_COMPLETE
+├── VPC: vpc-08a33d84b44e3e053
+├── Public Subnet 1: subnet-090f0040669325120 (ap-northeast-1a)
+├── Public Subnet 2: subnet-0a8b0ce5ca45cf01a (ap-northeast-1c)
+└── Internet Gateway + Route Table
+
+アプリケーションスタック (altmx-simple): CREATE_COMPLETE  
+├── ECS Cluster: altmx-simple-altmx-simple
+├── ECS Service: altmx-simple-service-altmx-simple (1 task 稼働中)
+├── Task Definition: nginx:latest (256 CPU, 512 Memory)
+└── Security Group: HTTP/80ポート公開
+```
 
 ## 🏗️ システム構成
 
@@ -79,30 +117,6 @@ graph TB
 
 ```bash
 # リポジトリのクローン
-git clone https://github.com/your-org/altmx.git
-cd altmx
-
-# 依存関係のインストール
-npm install
-cd backend && pip install -r requirements.txt
-
-# 環境変数の設定
-cp .env.example .env
-# .envファイルを編集して必要なAPIキーを設定
-```
-
-### 起動方法
-
-```bash
-# 開発環境の起動（フロントエンド + バックエンド同時起動）
-npm run dev
-
-# 本番環境用ビルド
-npm run build
-npm run start
-```
-
-デフォルトで http://localhost:3000 でアクセス可能です。
 
 ## 📝 使い方
 

@@ -1,0 +1,32 @@
+{
+  "name": "altmx-mvp",
+  "version": "1.0.0",
+  "description": "AltMX - AI協働開発ライブデモンストレーションシステム MVP",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "cd frontend && npm run build",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm run test",
+    "test:backend": "cd backend && python -m pytest",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "AI",
+    "demo",
+    "live-coding",
+    "札幌なまり",
+    "sports-car"
+  ],
+  "author": "AI Engineer ANO & SHUNPEI",
+  "license": "Private"
+}
