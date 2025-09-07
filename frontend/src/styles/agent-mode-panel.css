@@ -1,0 +1,388 @@
+/**
+ * AI Agent Mode Panel - トグルスイッチUI with ツールチップ
+ * ヴェイパーウェイブスタイルのモード切り替えパネル
+ */
+
+.agent-mode-panel {
+  background: linear-gradient(135deg, #1a0033 0%, #2d1b4e 50%, #1a0033 100%);
+  border: 2px solid #ff00ff;
+  border-radius: 12px;
+  padding: 0;
+  margin: 20px 0;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 255, 0.3),
+    0 0 30px rgba(0, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.agent-mode-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.agent-mode-panel.expanded {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 8px 40px rgba(255, 0, 255, 0.4),
+    0 0 50px rgba(0, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ヘッダー部分 */
+.mode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mode-header:hover {
+  background: rgba(255, 0, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.current-mode-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mode-icon {
+  font-size: 24px;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.mode-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+  font-family: 'Courier New', monospace;
+}
+
+.mode-status {
+  background: linear-gradient(45deg, #00ff00, #00ffff);
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+}
+
+.toggle-arrow {
+  font-size: 20px;
+  color: #ff00ff;
+  transition: transform 0.3s ease;
+}
+
+.agent-mode-panel.expanded .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* 展開エリア */
+.mode-selection-area {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mode-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff00ff;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #ff00ff;
+  font-family: 'Courier New', monospace;
+}
+
+.mode-message {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* モードトグルスイッチ群 */
+.mode-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mode-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 0, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ツールチップスタイル - 重要な追加 */
+.mode-toggle-row::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1a0033 0%, #2d1b4e 100%);
+  color: #00ffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid #ff00ff;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 300px;
+  width: max-content;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  box-shadow: 
+    0 4px 20px rgba(255, 0, 255, 0.4),
+    0 0 30px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 5px #00ffff;
+  font-family: 'Courier New', monospace;
+  margin-top: 10px;
+}
+
+.mode-toggle-row::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+  border: 8px solid transparent;
+  border-bottom-color: #ff00ff;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mode-toggle-row:hover::after,
+.mode-toggle-row:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.mode-toggle-row:hover::before {
+  transform: translateX(-50%) translateY(-7px);
+}
+
+.mode-toggle-row:hover {
+  background: rgba(255, 0, 255, 0.1);
+  border-color: #ff00ff;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 15px rgba(255, 0, 255, 0.3),
+    0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.mode-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.mode-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mode-label {
+  font-weight: bold;
+  color: #00ffff;
+  font-size: 16px;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.mode-desc {
+  font-size: 12px;
+  color: #ff00ff;
+  opacity: 0.8;
+}
+
+/* トグルスイッチスタイル */
+.toggle-switch-container {
+  position: relative;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background: #333;
+  border: 2px solid #666;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-handle {
+  position: absolute;
+  content: '';
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  top: 2px;
+  background: linear-gradient(45deg, #fff, #ddd);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch input:checked + .toggle-slider .toggle-handle {
+  transform: translateX(30px);
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  box-shadow: 
+    0 2px 10px rgba(0, 255, 255, 0.5),
+    0 0 15px rgba(255, 0, 255, 0.3);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  border-color: var(--active-color, #00ffff);
+  box-shadow: 
+    inset 0 2px 5px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+/* ローディング表示 */
+.mode-loading {
+  text-align: center;
+  padding: 15px;
+  color: #00ffff;
+  font-style: italic;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #00ffff;
+  }
+  to {
+    text-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff;
+  }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .agent-mode-panel {
+    margin: 10px 0;
+  }
+  
+  .mode-selection-area {
+    padding: 15px;
+  }
+  
+  .mode-toggle-row {
+    padding: 10px;
+  }
+  
+  .mode-toggle-row::after {
+    max-width: 250px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  
+  .toggle-slider {
+    width: 50px;
+    height: 25px;
+  }
+  
+  .toggle-handle {
+    height: 18px;
+    width: 18px;
+  }
+  
+  .toggle-switch input:checked + .toggle-slider .toggle-handle {
+    transform: translateX(25px);
+  }
+}
+
+/* アクセシビリティ対応 */
+.toggle-switch:focus-within .toggle-slider {
+  box-shadow: 
+    inset 0 2px 5px rgba(0, 0, 0, 0.5),
+    0 0 0 3px rgba(0, 255, 255, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

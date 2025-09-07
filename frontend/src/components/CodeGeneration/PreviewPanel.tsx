@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useCallback, useRef } from 'react'
+import { LivePreviewEngine } from './LivePreviewEngine'
 
 export interface GeneratedFile {
   filename: string
@@ -14,13 +15,15 @@ export interface GeneratedFile {
 
 export interface PreviewPanelProps {
   file: GeneratedFile | null
+  files?: GeneratedFile[]
   className?: string
 }
 
-type ViewMode = 'code' | 'preview'
+type ViewMode = 'code' | 'preview' | 'live'
 
 export const PreviewPanel: React.FC<PreviewPanelProps> = ({
   file,
+  files = [],
   className = ''
 }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('code')
@@ -140,6 +143,11 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
            file.filename.endsWith('.html')
   }, [])
 
+  // ライブプレビュー可能かチェック（React/TypeScriptコンポーネント）
+  const isLivePreviewable = useCallback((file: GeneratedFile): boolean => {
+    return file.language === 'typescript' && file.filename.endsWith('.tsx')
+  }, [])
+
   if (!file) {
     return (
       <div className={`bg-white border border-gray-200 rounded-lg p-8 text-center ${className}`}>
@@ -175,7 +183,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
 
         <div className="flex items-center space-x-2">
           {/* ビューモード切り替え */}
-          {isPreviewable(file) && (
+          {(isPreviewable(file) || isLivePreviewable(file)) && (
             <div className="flex rounded-md overflow-hidden border border-gray-300">
               <button
                 onClick={() => setViewMode('code')}
@@ -187,16 +195,30 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
               >
                 コード
               </button>
-              <button
-                onClick={() => setViewMode('preview')}
-                className={`px-3 py-1 text-sm font-medium transition-colors ${
-                  viewMode === 'preview'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                プレビュー
-              </button>
+              {isPreviewable(file) && (
+                <button
+                  onClick={() => setViewMode('preview')}
+                  className={`px-3 py-1 text-sm font-medium transition-colors ${
+                    viewMode === 'preview'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  プレビュー
+                </button>
+              )}
+              {isLivePreviewable(file) && (
+                <button
+                  onClick={() => setViewMode('live')}
+                  className={`px-3 py-1 text-sm font-medium transition-colors ${
+                    viewMode === 'live'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  ライブ
+                </button>
+              )}
             </div>
           )}
 
@@ -232,8 +254,18 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
               </div>
             </pre>
           </div>
+        ) : viewMode === 'live' ? (
+          /* ライブプレビュービュー */
+          <div className="p-4">
+            <LivePreviewEngine
+              files={files}
+              selectedFile={file}
+              onError={(error) => console.error('Live preview error:', error)}
+              onCompileSuccess={() => console.log('Live preview compiled successfully')}
+            />
+          </div>
         ) : (
-          /* プレビュービュー */
+          /* 静的プレビュービュー */
           <div className="p-4">
             <div className="border border-gray-300 rounded-lg overflow-hidden">
               <div className="bg-gray-100 px-3 py-2 text-sm text-gray-600 border-b border-gray-300">

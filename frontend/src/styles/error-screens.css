@@ -1,0 +1,1717 @@
+/**
+ * AltMX - HTTPエラー画面 CSS
+ * 仕様書: /src/ui/03-error-screens.md
+ * デザインテーマ: グリッチ × ネオンパンク × ヴェイパーウェイブ
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323:wght@400&family=Orbitron:wght@400;700;900&family=Iceland&display=swap');
+
+:root {
+  /* エラー画面専用カラーパレット */
+  --error-400-orange: #ffb000;
+  --error-404-cyan: #00ffff;
+  --error-500-pink: #ff006e;
+  --error-503-purple: #f093fb;
+  
+  /* 共通カラー */
+  --background-black: #000000;
+  --background-dark: #0a0a0a;
+  --text-white: #ffffff;
+  --text-gray: #888888;
+  
+  /* フォント */
+  --font-main: 'VT323', monospace;
+  --font-accent: 'Orbitron', monospace;
+  --font-cyber: 'Iceland', cursive;
+}
+
+/* ========== 共通エラー画面スタイル ========== */
+.error-screen-container {
+  font-family: var(--font-main);
+  background: var(--background-black);
+  color: var(--text-white);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.error-content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* ========== 背景エフェクト ========== */
+.error-background-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neon-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(0deg, 
+      transparent, 
+      transparent 60px, 
+      rgba(255, 255, 255, 0.03) 60px, 
+      rgba(255, 255, 255, 0.03) 61px),
+    repeating-linear-gradient(90deg, 
+      transparent, 
+      transparent 60px, 
+      rgba(255, 255, 255, 0.03) 60px, 
+      rgba(255, 255, 255, 0.03) 61px);
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+.scanlines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.02) 2px,
+    rgba(255, 255, 255, 0.02) 4px
+  );
+  animation: scanline-move 2s linear infinite;
+}
+
+@keyframes scanline-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+/* ========== パーティクルエフェクト ========== */
+.particle-effects {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: float-away 5s ease-out infinite;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  background: var(--error-404-cyan);
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 60%;
+  left: 80%;
+  background: var(--error-500-pink);
+  animation-delay: 1.5s;
+}
+
+.particle-3 {
+  top: 80%;
+  left: 30%;
+  background: var(--error-400-orange);
+  animation-delay: 3s;
+}
+
+.particle-4 {
+  top: 40%;
+  left: 70%;
+  background: var(--error-503-purple);
+  animation-delay: 4.5s;
+}
+
+@keyframes float-away {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ========== エラーコード表示 ========== */
+.error-code-section {
+  margin-bottom: 40px;
+}
+
+.error-code-large {
+  font-family: var(--font-accent);
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 20px;
+  text-shadow: 0 0 50px currentColor;
+  animation: number-glitch 2s ease-in-out infinite;
+}
+
+.error-title {
+  font-family: var(--font-accent);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  animation: title-pulse 3s ease-in-out infinite;
+}
+
+/* ========== グリッチアニメーション ========== */
+.glitch-effect {
+  position: relative;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+}
+
+.glitch-effect::before {
+  animation: glitch-1 0.3s ease-in-out infinite alternate;
+  color: #ff00ff;
+  z-index: -1;
+}
+
+.glitch-effect::after {
+  animation: glitch-2 0.3s ease-in-out infinite alternate;
+  color: #00ffff;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0% { transform: translate(0); }
+  20% { transform: translate(2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-2px, 2px); }
+  80% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes number-glitch {
+  0%, 100% { 
+    text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff, 0 0 30px currentColor; 
+  }
+  50% { 
+    text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff, 0 0 50px currentColor; 
+  }
+}
+
+@keyframes title-pulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* ========== グリッチ入場アニメーション ========== */
+.glitch-in {
+  animation: glitch-in 1.5s ease-out;
+}
+
+@keyframes glitch-in {
+  0% { 
+    transform: scale(0.9) skew(1deg); 
+    opacity: 0; 
+    filter: blur(5px);
+  }
+  20% { 
+    transform: scale(1.1) skew(-1deg); 
+    opacity: 0.5; 
+    filter: blur(3px);
+  }
+  40% { 
+    transform: scale(0.95) skew(0.5deg); 
+    opacity: 0.8; 
+    filter: blur(2px);
+  }
+  60% { 
+    transform: scale(1.05) skew(-0.5deg); 
+    opacity: 0.9;
+    filter: blur(1px);
+  }
+  100% { 
+    transform: scale(1) skew(0); 
+    opacity: 1; 
+    filter: blur(0);
+  }
+}
+
+/* ========== ASCII Art装飾 ========== */
+.ascii-decoration {
+  margin: 40px 0;
+  opacity: 0.7;
+}
+
+.ascii-decoration pre {
+  font-family: var(--font-main);
+  font-size: 14px;
+  line-height: 1.2;
+  color: currentColor;
+  animation: ascii-flicker 4s ease-in-out infinite;
+}
+
+@keyframes ascii-flicker {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.9; }
+}
+
+/* ========== AltMXメッセージ ========== */
+.altmx-message-section {
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.altmx-avatar-mini {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--error-404-cyan) 0%, var(--error-500-pink) 100%);
+  animation: avatar-float 3s ease-in-out infinite;
+}
+
+.avatar-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.avatar-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  animation: core-pulse 2s ease-in-out infinite;
+}
+
+@keyframes avatar-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+.altmx-message {
+  text-align: left;
+  max-width: 400px;
+}
+
+.altmx-message p {
+  font-size: 20px;
+  line-height: 1.4;
+  margin: 8px 0;
+  color: currentColor;
+}
+
+/* ========== アクションボタン ========== */
+.error-action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 50px 0;
+  flex-wrap: wrap;
+}
+
+.error-button {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 15px 30px;
+  border: 2px solid;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  min-width: 200px;
+}
+
+.primary-button {
+  border-color: currentColor;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.secondary-button {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.error-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px currentColor;
+}
+
+.error-button:active {
+  transform: scale(0.98);
+}
+
+/* ボタンリップルエフェクト */
+.error-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.error-button:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* ========== ステータス表示 ========== */
+.error-status-section {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator {
+  position: relative;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: status-blink 2s ease-in-out infinite;
+}
+
+.status-dot.searching {
+  background: var(--error-400-orange);
+  box-shadow: 0 0 15px var(--error-400-orange);
+}
+
+.status-dot.available {
+  background: var(--error-404-cyan);
+  box-shadow: 0 0 15px var(--error-404-cyan);
+}
+
+@keyframes status-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+.status-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ========== カラーテーマバリエーション ========== */
+
+/* 404 - シアンテーマ */
+.error-screen-404.cyan-theme {
+  background: radial-gradient(circle at center, 
+    rgba(0, 255, 255, 0.1) 0%, 
+    var(--background-black) 70%);
+}
+
+.cyan-theme .error-code-large {
+  color: var(--error-404-cyan);
+}
+
+.cyan-theme .error-title {
+  color: var(--error-404-cyan);
+}
+
+.cyan-theme .primary-button {
+  color: var(--error-404-cyan);
+}
+
+/* ネオングロー効果 */
+.neon-glow-cyan {
+  box-shadow: 
+    inset 0 0 50px rgba(0, 255, 255, 0.1),
+    0 0 100px rgba(0, 255, 255, 0.1);
+}
+
+/* ========== レスポンシブ対応 ========== */
+.responsive-layout {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .error-code-large {
+    font-size: 80px;
+  }
+  
+  .error-title {
+    font-size: 24px;
+    letter-spacing: 4px;
+  }
+  
+  .altmx-message-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .altmx-message {
+    text-align: center;
+  }
+  
+  .error-action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .error-button {
+    min-width: 250px;
+  }
+  
+  .error-status-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-code-large {
+    font-size: 60px;
+  }
+  
+  .error-title {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  
+  .ascii-decoration pre {
+    font-size: 10px;
+  }
+  
+  .altmx-message p {
+    font-size: 16px;
+  }
+}
+
+/* ========== 休憩画面スタイル ========== */
+.break-screen {
+  font-family: var(--font-main);
+  background: var(--background-black);
+  color: var(--text-white);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.vaporwave-theme {
+  background: linear-gradient(45deg, 
+    #667eea 0%, 
+    #764ba2 25%, 
+    #f093fb 50%, 
+    #f5576c 75%, 
+    #4facfe 100%);
+}
+
+.gradient-background {
+  background-size: 400% 400%;
+}
+
+.gradient-animation {
+  animation: gradient-shift-break 15s ease infinite;
+}
+
+@keyframes gradient-shift-break {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* アニメーション背景 */
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: float-particle 8s ease-in-out infinite;
+}
+
+.float-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.float-2 {
+  top: 60%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+.float-3 {
+  top: 30%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+.float-4 {
+  top: 80%;
+  left: 60%;
+  animation-delay: 6s;
+}
+
+.float-5 {
+  top: 50%;
+  left: 85%;
+  animation-delay: 8s;
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-15px);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-30px) translateX(5px);
+    opacity: 0.6;
+  }
+}
+
+/* メインコンテンツ */
+.break-content {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* タイトル */
+.break-title {
+  font-family: var(--font-accent);
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 40px;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+  letter-spacing: 8px;
+}
+
+.pulse-effect {
+  animation: title-pulse-break 2s ease-in-out infinite;
+}
+
+@keyframes title-pulse-break {
+  0%, 100% { 
+    transform: scale(1); 
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+  }
+  50% { 
+    transform: scale(1.05); 
+    text-shadow: 0 0 50px rgba(255, 255, 255, 1);
+  }
+}
+
+/* カウントダウンタイマー */
+.timer-display {
+  font-family: var(--font-accent);
+  font-size: 120px;
+  font-weight: 900;
+  margin-bottom: 30px;
+  background: linear-gradient(45deg, #00ffff, #ff71ce);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+  animation: timer-pulse 1s ease-in-out infinite;
+}
+
+.timer-display.warning-time {
+  background: linear-gradient(45deg, #ff006e, #ffb000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: warning-blink 0.5s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes warning-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* 休憩メッセージ */
+.break-message {
+  margin: 40px 0;
+  opacity: 0.9;
+}
+
+.break-message p {
+  font-size: 24px;
+  line-height: 1.6;
+  margin: 12px 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* ビジュアルウェーブバー */
+.visual-wave-bars {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+  margin: 40px 0;
+  padding: 20px;
+}
+
+.wave-bar {
+  width: 12px;
+  background: linear-gradient(to top, #00ffff, #ff71ce, #f093fb);
+  border-radius: 2px;
+  min-height: 20px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.wave-bounce {
+  animation: wave-bounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes wave-bounce {
+  0% { transform: scaleY(0.8); }
+  100% { transform: scaleY(1.2); }
+}
+
+/* 次セッション予告 */
+.next-session-preview {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 30px;
+  margin: 40px 0;
+  backdrop-filter: blur(10px);
+}
+
+.next-session-title {
+  font-family: var(--font-accent);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ff71ce;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.session-info {
+  text-align: center;
+}
+
+.session-name {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #00ffff;
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.session-description {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.session-duration {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  color: #f093fb;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 制御ボタン */
+.break-controls {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.control-button {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.control-button:hover {
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.skip-button:hover {
+  border-color: #ff71ce;
+  box-shadow: 0 0 15px rgba(255, 113, 206, 0.5);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .break-title {
+    font-size: 36px;
+    letter-spacing: 4px;
+  }
+  
+  .timer-display {
+    font-size: 80px;
+  }
+  
+  .break-message p {
+    font-size: 20px;
+  }
+  
+  .visual-wave-bars {
+    height: 80px;
+  }
+  
+  .session-name {
+    font-size: 24px;
+  }
+  
+  .break-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .control-button {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .break-title {
+    font-size: 28px;
+    letter-spacing: 2px;
+  }
+  
+  .timer-display {
+    font-size: 60px;
+  }
+  
+  .break-message p {
+    font-size: 18px;
+  }
+  
+  .next-session-preview {
+    padding: 20px;
+  }
+  
+  .session-name {
+    font-size: 20px;
+  }
+}
+
+/* ========== 500エラー画面専用スタイル ========== */
+
+/* 500 - ピンクテーマ */
+.error-screen-500.pink-theme {
+  background: radial-gradient(circle at center, rgba(255, 0, 110, 0.15) 0%, var(--background-black) 70%);
+}
+
+.error-screen-500.pink-theme .error-code-large {
+  color: var(--accent-pink);
+  text-shadow: 0 0 20px var(--accent-pink), 0 0 40px var(--accent-pink);
+}
+
+.error-screen-500.pink-theme .error-title {
+  color: var(--accent-pink);
+}
+
+/* ピンクネオングロー */
+.neon-glow-pink {
+  box-shadow: inset 0 0 50px rgba(255, 0, 110, 0.1), 
+              0 0 20px rgba(255, 0, 110, 0.2);
+}
+
+.neon-glow-pink::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 0, 110, 0.1), 
+    transparent);
+}
+
+/* パーティクル効果 */
+.background-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle-float {
+  position: absolute;
+  background: var(--accent-pink);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: particle-float 5s ease-in-out infinite;
+}
+
+.particle-float:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle-float:nth-child(2) {
+  top: 50%;
+  left: 80%;
+  animation-delay: 1s;
+}
+
+.particle-float:nth-child(3) {
+  top: 80%;
+  left: 30%;
+  animation-delay: 2s;
+}
+
+.particle-float:nth-child(4) {
+  top: 30%;
+  left: 70%;
+  animation-delay: 3s;
+}
+
+.particle-float:nth-child(5) {
+  top: 70%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.particle-float:nth-child(6) {
+  top: 40%;
+  left: 50%;
+  animation-delay: 5s;
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+/* エラー情報表示 */
+.error-info {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 0, 110, 0.1);
+  border: 1px solid rgba(255, 0, 110, 0.3);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.error-details {
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.detail-label {
+  color: var(--accent-pink);
+  opacity: 0.8;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.error-timestamp {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 0, 110, 0.3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.timestamp-label {
+  color: var(--accent-pink);
+  opacity: 0.8;
+}
+
+.timestamp-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ========== 400エラー画面専用スタイル ========== */
+
+/* 400 - オレンジテーマ */
+.error-screen-400.orange-theme {
+  background: radial-gradient(circle at center, rgba(255, 176, 0, 0.15) 0%, var(--background-black) 70%);
+}
+
+.error-screen-400.orange-theme .error-code-large {
+  color: var(--accent-orange);
+  text-shadow: 0 0 20px var(--accent-orange), 0 0 40px var(--accent-orange);
+}
+
+.error-screen-400.orange-theme .error-title {
+  color: var(--accent-orange);
+}
+
+/* オレンジネオングロー */
+.neon-glow-orange {
+  box-shadow: inset 0 0 50px rgba(255, 176, 0, 0.1), 
+              0 0 20px rgba(255, 176, 0, 0.2);
+}
+
+.neon-glow-orange::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 176, 0, 0.1), 
+    transparent);
+}
+
+/* 400エラー用パーティクル効果 */
+.error-screen-400 .particle-float {
+  background: var(--accent-orange);
+}
+
+/* スタンバイステータス表示 */
+.status-indicator.standby {
+  background: var(--accent-orange);
+  animation: standby-pulse 2s ease-in-out infinite;
+}
+
+@keyframes standby-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* リクエスト情報セクション */
+.request-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 176, 0, 0.1);
+  border: 1px solid rgba(255, 176, 0, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.request-info .info-title {
+  color: var(--accent-orange);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ========== 503エラー画面専用スタイル ========== */
+
+/* 503 - 紫テーマ */
+.error-screen-503.purple-theme {
+  background: radial-gradient(circle at center, rgba(240, 147, 251, 0.15) 0%, var(--background-black) 70%);
+}
+
+.error-screen-503.purple-theme .error-code-large {
+  color: var(--accent-purple);
+  text-shadow: 0 0 20px var(--accent-purple), 0 0 40px var(--accent-purple);
+}
+
+.error-screen-503.purple-theme .error-title {
+  color: var(--accent-purple);
+}
+
+/* 紫ネオングロー */
+.neon-glow-purple {
+  box-shadow: inset 0 0 50px rgba(240, 147, 251, 0.1), 
+              0 0 20px rgba(240, 147, 251, 0.2);
+}
+
+.neon-glow-purple::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(240, 147, 251, 0.1), 
+    transparent);
+}
+
+/* 503エラー用パーティクル効果 */
+.error-screen-503 .particle-float {
+  background: var(--accent-purple);
+}
+
+/* カウントダウンタイマー */
+.countdown-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.countdown-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 25px;
+  background: rgba(240, 147, 251, 0.2);
+  border: 2px solid var(--accent-purple);
+  border-radius: 12px;
+  font-family: var(--font-accent);
+  animation: timer-pulse 1s ease-in-out infinite;
+}
+
+.timer-label {
+  color: var(--accent-purple);
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.timer-value {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  text-shadow: 0 0 10px var(--accent-purple);
+}
+
+/* 過負荷・待機ステータス表示 */
+.status-indicator.overload {
+  background: #ff4444;
+  animation: overload-blink 1s ease-in-out infinite;
+}
+
+.status-indicator.wait {
+  background: var(--accent-purple);
+  animation: wait-pulse 2s ease-in-out infinite;
+}
+
+@keyframes overload-blink {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px #ff4444;
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 15px #ff4444;
+  }
+}
+
+@keyframes wait-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* サーバー負荷情報セクション */
+.server-load-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(240, 147, 251, 0.1);
+  border: 1px solid rgba(240, 147, 251, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.server-load-info .info-title {
+  color: var(--accent-purple);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 推定復旧時間 */
+.estimated-recovery {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(240, 147, 251, 0.05);
+  border: 1px dashed rgba(240, 147, 251, 0.3);
+  border-radius: 6px;
+}
+
+.estimated-recovery .detail-label {
+  color: var(--accent-purple);
+  font-weight: 600;
+}
+
+.estimated-recovery .detail-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* ========== エンディング画面専用スタイル ========== */
+
+/* 天からのテーマ */
+.ending-screen.heavenly-theme {
+  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, var(--background-black) 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ending-screen {
+  font-family: var(--font-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* 神聖なグロー効果 */
+.sacred-glow {
+  box-shadow: inset 0 0 100px rgba(255, 215, 0, 0.15), 
+              0 0 50px rgba(255, 215, 0, 0.2);
+}
+
+.sacred-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.05), 
+    transparent,
+    rgba(255, 215, 0, 0.05),
+    transparent);
+  animation: sacred-sweep 5s ease-in-out infinite;
+}
+
+@keyframes sacred-sweep {
+  0%, 100% { transform: translateX(-100%); opacity: 0; }
+  50% { transform: translateX(100%); opacity: 1; }
+}
+
+/* 天からの光線エフェクト */
+.light-rays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ray {
+  position: absolute;
+  width: 2px;
+  height: 100vh;
+  background: linear-gradient(to bottom, 
+    rgba(255, 215, 0, 0.8) 0%,
+    rgba(255, 215, 0, 0.4) 50%,
+    transparent 100%);
+  animation: light-ray 3s ease-in-out infinite;
+}
+
+.ray-1 { left: 20%; animation-delay: 0s; }
+.ray-2 { left: 40%; animation-delay: 0.5s; }
+.ray-3 { left: 60%; animation-delay: 1s; }
+.ray-4 { left: 80%; animation-delay: 1.5s; }
+.ray-5 { left: 50%; animation-delay: 2s; transform: rotate(15deg); }
+
+@keyframes light-ray {
+  0%, 100% { opacity: 0; transform: scaleY(0); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* 聖なる粒子エフェクト */
+.sacred-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sacred-particle {
+  position: absolute;
+  background: radial-gradient(circle, #ffd700, transparent);
+  border-radius: 50%;
+  animation: float-to-heaven 4s ease-out infinite;
+}
+
+@keyframes float-to-heaven {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ゴールド紙吹雪エフェクト */
+.gold-confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  animation: confetti-fall 3s ease-in infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* オーラリングエフェクト */
+.aura-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.aura-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: aura-expand 2s ease-out infinite;
+}
+
+@keyframes aura-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+/* メインコンテンツ */
+.ending-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* タイトル */
+.ending-title {
+  font-family: var(--font-accent);
+  font-size: 72px;
+  font-weight: 900;
+  color: #ffd700;
+  text-shadow: 0 0 30px #ffd700, 0 0 60px #ffd700;
+  margin-bottom: 30px;
+  letter-spacing: 4px;
+}
+
+.title-glow {
+  text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ffd700;
+}
+
+.pulse-sacred {
+  animation: pulse-sacred 2s ease-in-out infinite;
+}
+
+@keyframes pulse-sacred {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ffd700;
+  }
+  50% {
+    transform: scale(1.02);
+    text-shadow: 0 0 30px #ffd700, 0 0 60px #ffd700, 0 0 90px #ffd700;
+  }
+}
+
+/* 最終メッセージ */
+.final-message {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.final-message p {
+  margin-bottom: 10px;
+}
+
+/* セッション統計 */
+.session-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease-out;
+}
+
+.session-stats.stats-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-family: var(--font-accent);
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 20px #ffd700;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-primary);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.count-up {
+  animation: count-up 2s ease-out;
+}
+
+@keyframes count-up {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* 作成ツール一覧 */
+.created-tools {
+  margin-bottom: 50px;
+}
+
+.tools-title {
+  font-size: 24px;
+  color: #ffd700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tool-item {
+  padding: 20px;
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.tool-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.tool-type {
+  font-size: 14px;
+  color: var(--text-primary);
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.complexity-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.complexity-simple {
+  background: rgba(0, 255, 65, 0.2);
+  color: #00ff41;
+  border: 1px solid #00ff41;
+}
+
+.complexity-medium {
+  background: rgba(255, 176, 0, 0.2);
+  color: #ffb000;
+  border: 1px solid #ffb000;
+}
+
+.complexity-complex {
+  background: rgba(255, 0, 110, 0.2);
+  color: #ff006e;
+  border: 1px solid #ff006e;
+}
+
+/* ネクストアクション */
+.next-actions {
+  margin-bottom: 30px;
+}
+
+.actions-title {
+  font-size: 24px;
+  color: #ffd700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+.action-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+
+.action-url {
+  font-size: 12px;
+  color: var(--text-primary);
+  opacity: 0.6;
+  font-family: var(--font-mono);
+}
+
+.qr-code {
+  margin-top: 15px;
+}
+
+.qr-code img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+/* スクリーンリーダー用 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .ending-title {
+    font-size: 48px;
+  }
+  
+  .session-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .stat-number {
+    font-size: 36px;
+  }
+  
+  .tools-grid,
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
